@@ -4,9 +4,10 @@ import HomeLayout from '../../layouts/HomeLayout';
 import { Eye, EyeOff, Facebook, Github, Linkedin, Twitter, UserRound } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AddForm from '../../utils/AddForm';
+import registrationImg from '../../../public/registration.png'
 
 const SignUp = () => {
-    const [showPassword, setShowPassword] = useState({password: false, confirmPass: false});
+    const [showPassword, setShowPassword] = useState({ password: false, confirmPass: false });
     const [item, setItem] = useState({});
 
     const handleTogglePassword = (name) => {
@@ -15,88 +16,61 @@ const SignUp = () => {
             [name]: !prev[name]
         }));
     }
-    const onChange = (event) => {
-        const {name, value} = event?.target;
+    const handleChange = (event) => {
+        const { name, value } = event?.target;
         setItem(prev => ({
             ...prev,
             [name]: value
         }))
     }
 
+    const handleSubmit = () => {
+
+    }
+
     const textFields = [
         {
-            label: "your name",
+            placeholder: "Full Name",
             type: "text",
             name: "name",
         },
         {
-            label: "email address",
-            type: "text",
-            name: "email",
-        },
-        {
-            label: "phone number",
+            placeholder: "Phone Number",
             type: "number",
             name: "number",
         },
         {
-            label: "password",
+            placeholder: "Email id",
+            type: "text",
+            name: "email",
+        },
+        {
+            placeholder: "Password",
             type: "password",
             name: "password",
-            icon: showPassword?.password ? <EyeOff />:<Eye />,
+            icon: showPassword?.password ? <EyeOff /> : <Eye />,
             onClick: () => handleTogglePassword("password")
         },
         {
-            label: "confirm password",
+            placeholder: "Confirm Password",
             type: "password",
             name: "confirmPass",
-            icon: showPassword?.confirmPass ? <EyeOff />:<Eye />,
+            icon: showPassword?.confirmPass ? <EyeOff /> : <Eye />,
             onClick: () => handleTogglePassword("confirmPass")
         },
     ];
 
     return (
-        <HomeLayout heading={"sign up"} message={"Hi! Thanks for choosing us"}>
+        <HomeLayout heading={{text: "Register"}} image={registrationImg} navigator>
             <div className="space-y-5">
-                <AddForm textFields={textFields} showPassword={showPassword} onChange={onChange}/>
-                <Button variant={"contained"} fullWidth>sign up</Button>
-            </div>
-            {/* ..... */}
-            <div>
-                <p className="w-full border-b text-center">
-                    <span className="bg-white relative top-2 text-sm px-[10px]">
-                        or Login With
-                    </span>
-                </p>
-                <div className="flex gap-2 justify-evenly mt-7">
-                    <div className="h-[40px] w-[40px] px-[10px] py-[10px] hover:cursor-pointer opacity-90 hover:opacity-100 rounded border border-[#1e2e4f]">
-                        <Facebook className="w-5 h-4 text-[#3b5998]" />
+                <div className="space-y-5">
+                    <AddForm textFields={textFields} showPassword={showPassword} onChange={handleChange}/>
+                    <div className="flex items-center justify-center gap-1">
+                        <input id="rememberMe" type="checkbox" className="border border-gray-300 rounded-md w-6 h-5 animate-bounce" />
+                        <label htmlFor="rememberMe">Terms & Conditions</label>
                     </div>
-                    <div className="h-[40px] w-[40px] px-[10px] py-[10px] hover:cursor-pointer opacity-90 hover:opacity-100 rounded border border-[#55acee]">
-                        <Twitter className="w-5 h-4 text-[#55acee]" />
-                    </div>
-                    <div className="h-[40px] w-[40px] px-[10px] py-[10px] hover:cursor-pointer opacity-90 hover:opacity-100 rounded border border-[#007bb6]">
-                        <Linkedin className="w-5 h-4 text-[#007bb6]" />
-                    </div>
-                    <div className="h-[40px] w-[40px] px-[10px] py-[10px] hover:cursor-pointer opacity-90 hover:opacity-100 rounded border border-[#444]">
-                        <Github className="w-5 h-4 text-[#444]" />
-                    </div>
+                    <Link to={"/sign-up/verify"}><Button onClick={handleSubmit} fullWidth>Send verification code</Button></Link>
                 </div>
-            </div>
-            {/* ..... */}
-            <div>
-                <p className="w-full border-b text-center">
-                    <span className="bg-white relative top-2 text-sm px-[10px]">
-                        Already have an account?
-                    </span>
-                </p>
-                <Link
-                    to={"/"}
-                    className="rounded transition-all duration-300 w-full mt-7 flex justify-center text-danger border border-danger hover:bg-danger hover:text-white py-2"
-                >
-                    <UserRound className="h-4 mt-1" />
-                    Login
-                </Link>
             </div>
         </HomeLayout>
     )

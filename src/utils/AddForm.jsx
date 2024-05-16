@@ -1,9 +1,9 @@
 import TextField from './TextField'
 
-const AddForm = ({ textFields, onChange, showPassword }) => {
+const AddForm = ({ textFields, onChange, items, showPassword }) => {
   return (
     <div>
-        <form>
+        <form className="space-y-7">
             {
                 textFields?.map((input, index) => {
                     return(
